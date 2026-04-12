@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Te Reo Māori — A Grammar Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1410;
+  --paper: #f5f0e8;
+  --paper-dark: #ede7d9;
+  --accent: #8b3a1a;
+  --accent-light: #c4622d;
+  --teal: #1a5c52;
+  --teal-light: #e8f2f0;
+  --gold: #b8860b;
+  --gold-light: #f5edcf;
+  --muted: #6b5c4a;
+  --border: #c8b89a;
+  --maori-color: #6b2a10;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+/* HEADER */
+header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 39px, rgba(245,240,232,0.04) 39px, rgba(245,240,232,0.04) 40px
+  ), repeating-linear-gradient(
+    90deg, transparent, transparent 39px, rgba(245,240,232,0.04) 39px, rgba(245,240,232,0.04) 40px
+  );
+  pointer-events: none;
+}
+
+.header-koru {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+  letter-spacing: 0.3em;
+}
+
+header h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+  color: var(--paper);
+}
+
+header h1 em {
+  font-style: italic;
+  color: #d4956a;
+}
+
+header .subtitle {
+  font-size: 1rem;
+  color: #a89880;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.header-rule {
+  width: 60px;
+  height: 1px;
+  background: var(--accent-light);
+  margin: 1.5rem auto;
+  opacity: 0.6;
+}
+
+header p.intro {
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: 1rem;
+  color: #b8a890;
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+/* NAV */
+nav {
+  background: var(--paper-dark);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  overflow-x: auto;
+  gap: 0;
+  scrollbar-width: none;
+}
+nav::-webkit-scrollbar { display: none; }
+
+nav a {
+  display: block;
+  padding: 1rem 1.1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  text-decoration: none;
+  color: var(--muted);
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  letter-spacing: 0.04em;
+}
+nav a:hover { color: var(--accent); border-bottom-color: var(--accent-light); }
+nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* LAYOUT */
+.container { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+/* UNIT */
+.unit {
+  padding: 4rem 0 0;
+}
+
+.unit-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.unit-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 400;
+  color: var(--border);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.unit-info { flex: 1; }
+
+.unit-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
+.unit-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+/* LESSON */
+.lesson {
+  margin-bottom: 3rem;
+}
+
+.lesson-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent-light);
+}
+
+/* SECTION LABEL */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 1.5rem 0 0.6rem;
+}
+
+/* CONCEPT */
+.concept {
+  font-size: 1rem;
+  color: var(--ink);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+/* HIGHLIGHT */
+.highlight {
+  background: var(--gold-light);
+  border-left: 3px solid var(--gold);
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.95rem;
+  color: #4a3500;
+  line-height: 1.75;
+}
+
+/* FORMULA */
+.formula-box {
+  background: var(--teal-light);
+  border-left: 3px solid var(--teal);
+  padding: 0.8rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 6px 6px 0;
+}
+.formula-box .formula {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--teal);
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+.formula-box .fnote {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* TABLE */
+.table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th {
+  background: var(--paper-dark);
+  padding: 0.65rem 1rem;
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid #e8dfc8;
+  vertical-align: top;
+  line-height: 1.6;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(139,58,26,0.03); }
+td.m { font-weight: 500; color: var(--maori-color); font-family: 'Source Serif 4', serif; }
+td.note { color: var(--muted); font-size: 0.85rem; font-style: italic; }
+
+/* EXAMPLES */
+.example-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+.ex-col {
+  background: var(--paper);
+  padding: 0.85rem 1rem;
+}
+.ex-col:first-child { background: var(--paper-dark); }
+.ex-lang {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.ex-text {
+  font-size: 0.92rem;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.ex-text.maori { color: var(--maori-color); font-weight: 500; }
+
+/* DIVIDER */
+.unit-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 4rem 0 0;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 5rem;
+  padding: 3rem 2rem;
+  background: var(--ink);
+  color: #8a7a68;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 2;
+}
+footer strong { color: #c4956a; font-weight: 400; font-style: italic; }
+
+/* SCROLL FADE IN */
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .example-strip { grid-template-columns: 1fr; }
+  .unit-header { flex-direction: column; gap: 0.3rem; }
+  .unit-number { font-size: 2.5rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-koru">— ✦ —</div>
+  <h1><em>Te Reo Māori</em></h1>
+  <p class="subtitle">A grammar-based course for European language learners</p>
+  <div class="header-rule"></div>
+  <p class="intro">Structured around familiar grammatical concepts — verbs, nouns, tense, case, and aspect — rather than the abstract frameworks of Biggs' New Grammar. If you understand how Latin, French, or Spanish work, this course speaks your language.</p>
+</header>
+
+<nav id="mainNav">
+  <a href="#unit1">1. Sounds</a>
+  <a href="#unit2">2. Sentence</a>
+  <a href="#unit3">3. Tense & aspect</a>
+  <a href="#unit4">4. Nouns</a>
+  <a href="#unit5">5. Possession</a>
+  <a href="#unit6">6. Pronouns</a>
+  <a href="#unit7">7. Case</a>
+  <a href="#unit8">8. Adjectives</a>
+  <a href="#unit9">9. Passive</a>
+  <a href="#unit10">10. Clauses</a>
+</nav>
+
+<main class="container">
+
+<!-- UNIT 1 -->
+<section class="unit fade-in" id="unit1">
+  <div class="unit-header">
+    <div class="unit-number">01</div>
+    <div class="unit-info">
+      <div class="unit-label">Unit one</div>
+      <div class="unit-title">Sounds &amp; orthography</div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">The Māori alphabet and pronunciation</h3>
+
+    <p class="concept">Māori uses 15 letters: <strong>a, e, h, i, k, m, n, o, p, r, t, u, w, wh, ng</strong>. Every letter is pronounced — there are no silent letters, and spelling is perfectly phonetic. Once you know the sounds, you can read any Māori word correctly.</p>
+
+    <div class="section-label">Vowels — always pure, never glided</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Letter</th><th>Sound</th><th>Like the English word…</th></tr></thead>
+        <tbody>
+          <tr><td class="m">a</td><td>ah</td><td>f<em>a</em>ther</td></tr>
+          <tr><td class="m">e</td><td>eh</td><td>b<em>e</em>d</td></tr>
+          <tr><td class="m">i</td><td>ee</td><td>mach<em>i</em>ne</td></tr>
+          <tr><td class="m">o</td><td>oh</td><td>g<em>o</em> (but shorter)</td></tr>
+          <tr><td class="m">u</td><td>oo</td><td>m<em>oo</em>n (but shorter)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="concept">Long vowels are written with a macron (tohutō): <strong>ā, ē, ī, ō, ū</strong>. These are the same sound but held longer. Length changes meaning: <em>ana</em> = cave, <em>āna</em> = his/hers. Treat macrons like accents in French or Spanish — they are part of the spelling.</p>
+
+    <div class="section-label">Key consonants</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Letter</th><th>Pronunciation</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td class="m">wh</td><td>f (or wh in some dialects)</td><td>like <em>farm</em> in most modern usage</td></tr>
+          <tr><td class="m">ng</td><td>ng as in <em>sing</em></td><td>can begin a word — <em>ngā</em> (the, plural)</td></tr>
+          <tr><td class="m">r</td><td>a light flap</td><td>like the Spanish <em>r</em> in <em>pero</em>, not the English r</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight">Key rule: every syllable in Māori ends in a vowel. Consonants are always followed by a vowel. This makes the rhythm very even: <em>Ao-tea-ro-a</em>, <em>wha-ka-a-ro</em>, <em>ta-nga-ta</em>.</div>
+  </div>
+</section>
+
+<hr class="unit-divider">
+
+<!-- UNIT 2 -->
+<section class="unit fade-in" id="unit2">
+  <div class="unit-header">
+    <div class="unit-number">02</div>
+    <div class="unit-info">
+      <div class="unit-label">Unit two</div>
+      <div class="unit-title">The sentence &amp; word order</div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Verb–Subject–Object (VSO) word order</h3>
+    <p class="concept">In English, the default order is Subject–Verb–Object (SVO): "The dog bit the man." Māori places the verb first, then the subject, then the object. This is perfectly normal — Irish, Classical Arabic, and many Pacific languages share this structure.</p>
+    <div class="formula-box">
+      <div class="formula">VERB — SUBJECT — OBJECT</div>
+      <div class="fnote">This is the fundamental sentence template. Every Māori sentence is built on this skeleton.</div>
+    </div>
+    <div class="section-label">Comparing word order</div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">English (SVO)</div><div class="ex-text">The man ate the fish.</div></div>
+      <div class="ex-col"><div class="ex-lang">Māori (VSO)</div><div class="ex-text maori">I kai te tangata i te ika.</div></div>
+      <div class="ex-col"><div class="ex-lang">Gloss</div><div class="ex-text">ATE the man [obj] the fish</div></div>
+    </div>
+    <p class="concept">The word <em>i</em> appearing before <em>te ika</em> is a case marker — it marks the object. This is similar to how Latin or German use different noun endings to show grammatical role. Māori uses small particles instead of endings.</p>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Equative sentences — the verb "to be"</h3>
+    <p class="concept">Like Russian, Arabic, and Hebrew, Māori does not use a verb "to be" in simple equative sentences. Instead, a sentence-initial particle carries this meaning.</p>
+    <div class="section-label">Equative particles — the "to be" equivalents</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Particle</th><th>Function</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="m">Ko</td><td>Identifies or names</td><td><em>Ko Tāne tōku ingoa</em> — My name is Tāne</td></tr>
+          <tr><td class="m">He</td><td>Classifies (a/an + noun)</td><td><em>He tangata ia</em> — He/she is a person</td></tr>
+          <tr><td class="m">Koia</td><td>That's it / exactly so</td><td><em>Koia!</em> — That's right!</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Structure</div><div class="ex-text">Ko [identified] [identifier]</div></div>
+      <div class="ex-col"><div class="ex-lang">Māori</div><div class="ex-text maori">Ko Aotearoa tōku kāinga.</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">Aotearoa is my home.</div></div>
+    </div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Structure</div><div class="ex-text">He [noun class] [subject]</div></div>
+      <div class="ex-col"><div class="ex-lang">Māori</div><div class="ex-text maori">He kaiako ia.</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">He/she is a teacher.</div></div>
+    </div>
+    <div class="highlight">Think of <em>ko</em> as "equals" (=) and <em>he</em> as the indefinite article "a/an" functioning as a predicate. Ko Mere tōku māmā = "Mere = my mother". He kaiako ia = "She is [a] teacher."</div>
+  </div>
+</section>
+
+<hr class="unit-divider">
+
+<!-- UNIT 3 -->
+<section class="unit fade-in" id="unit3">
+  <div class="unit-header">
+    <div class="unit-number">03</div>
+    <div class="unit-info">
+      <div class="unit-label">Unit three</div>
+      <div class="unit-title">Tense &amp; aspect</div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Tense markers — the verbal particle system</h3>
+    <p class="concept">Māori verbs never change their form. Instead, a tense particle is placed before the verb — much like the English "will" for future or "did" for past. This is called periphrastic tense, and it is also used in Romance languages (French <em>je vais manger</em>) and Germanic ones.</p>
+
+    <div class="section-label">The core tense and aspect particles</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Particle</th><th>Tense / Aspect</th><th>European equivalent</th></tr></thead>
+        <tbody>
+          <tr><td class="m">kei te</td><td>Present continuous</td><td>is/are + -ing</td></tr>
+          <tr><td class="m">ka</td><td>Simple present / sequential narrative</td><td>simple present or narrative past</td></tr>
+          <tr><td class="m">i</td><td>Simple past (completed)</td><td>did / verb-ed</td></tr>
+          <tr><td class="m">i te</td><td>Past continuous (ongoing)</td><td>was/were + -ing</td></tr>
+          <tr><td class="m">e … ana</td><td>Future continuous</td><td>will be / is about to</td></tr>
+          <tr><td class="m">ka … ana</td><td>Habitual / repeated</td><td>used to / would (habitual)</td></tr>
+          <tr><td class="m">kia</td><td>Subjunctive / purpose</td><td>may / should / in order to</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-label">The same verb across tenses</div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Particle</div><div class="ex-text">kei te</div></div>
+      <div class="ex-col"><div class="ex-lang">Māori</div><div class="ex-text maori">Kei te haere ia.</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">He/she is going. (now)</div></div>
+    </div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Particle</div><div class="ex-text">ka</div></div>
+      <div class="ex-col"><div class="ex-lang">Māori</div><div class="ex-text maori">Ka haere ia.</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">He/she goes. (general / sequential)</div></div>
+    </div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Particle</div><div class="ex-text">i</div></div>
+      <div class="ex-col"><div class="ex-lang">Māori</div><div class="ex-text maori">I haere ia.</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">He/she went. (completed)</div></div>
+    </div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Particle</div><div class="ex-text">i te</div></div>
+      <div class="ex-col"><div class="ex-lang">Māori</div><div class="ex-text maori">I te haere ia.</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">He/she was going. (ongoing in past)</div></div>
+    </div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Particle</div><div class="ex-text">e … ana</div></div>
+      <div class="ex-col"><div class="ex-lang">Māori</div><div class="ex-text maori">E haere ana ia.</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">He/she will be going.</div></div>
+    </div>
+
+    <div class="highlight">The particle <em>te</em> consistently signals continuous/ongoing aspect. <em>Kei te</em> = present continuous; <em>i te</em> = past continuous. Swap <em>kei</em> for <em>i</em> and you move the ongoing action into the past. The <em>te</em> stays constant — it is the aspect marker.</div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Ka — the narrative particle</h3>
+    <p class="concept"><em>Ka</em> is the most versatile particle. In the present, it marks general or habitual action. In narrative, it is the sequential particle — used to advance a story from one action to the next, like the Greek aorist or the Latin narrative present.</p>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Māori</div><div class="ex-text maori">Ka haere ia ki te tāone. Ka kitea e ia tōna hoa.</div></div>
+      <div class="ex-col"><div class="ex-lang">Gloss</div><div class="ex-text">SEQ go he to the town. SEQ see by him his friend.</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">He went to town. He saw his friend.</div></div>
+    </div>
+    <div class="highlight"><em>Ka</em> is not a past tense particle — but it sequences actions in narrative. Think of it like the Greek aorist: it advances the story without specifying a time frame. Use <em>i</em> when you want to explicitly mark completion in the past.</div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">The aspect system — a full overview</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Time</th><th>Continuous (ongoing)</th><th>Simple (completed/general)</th></tr></thead>
+        <tbody>
+          <tr><td>Present</td><td class="m">kei te haere — is going</td><td class="m">ka haere — goes</td></tr>
+          <tr><td>Past</td><td class="m">i te haere — was going</td><td class="m">i haere — went</td></tr>
+          <tr><td>Future</td><td class="m">e haere ana — will be going</td><td class="m">ka haere — will go</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<hr class="unit-divider">
+
+<!-- UNIT 4 -->
+<section class="unit fade-in" id="unit4">
+  <div class="unit-header">
+    <div class="unit-number">04</div>
+    <div class="unit-info">
+      <div class="unit-label">Unit four</div>
+      <div class="unit-title">Nouns &amp; the article</div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Te and ngā — the definite article</h3>
+    <p class="concept">Māori has a definite article but no indefinite article. Unlike French or German, it does not mark grammatical gender — only number.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>Singular</th><th>Plural</th></tr></thead>
+        <tbody>
+          <tr><td>Definite ("the")</td><td class="m">te</td><td class="m">ngā</td></tr>
+          <tr><td>Indefinite ("a/an")</td><td class="note" colspan="2">— none. He serves this role in predicates.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Singular</div><div class="ex-text maori">te kurī</div></div>
+      <div class="ex-col"><div class="ex-lang">Plural</div><div class="ex-text maori">ngā kurī</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">the dog / the dogs</div></div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Nouns do not inflect</h3>
+    <p class="concept">Unlike English (-s, -es), Latin (multiple declensions), or German, Māori nouns never change their form. Plurality is shown entirely by the article. The noun itself is invariant.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Māori</th><th>English</th></tr></thead>
+        <tbody>
+          <tr><td class="m">te whare / ngā whare</td><td>the house / the houses</td></tr>
+          <tr><td class="m">te tangata / ngā tangata</td><td>the person / the people</td></tr>
+          <tr><td class="m">te ika / ngā ika</td><td>the fish / the fish (plural)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">The personal article — a</h3>
+    <p class="concept">Personal names and pronouns take a special particle <em>a</em> when used as subjects or objects. Common nouns never take this particle. Think of it as a "personal case marker" — it signals to the listener that a person's name follows.</p>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Māori</div><div class="ex-text maori">I kite a Mere i a Tāne.</div></div>
+      <div class="ex-col"><div class="ex-lang">Gloss</div><div class="ex-text">PAST see [pers] Mere [obj] [pers] Tāne</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">Mere saw Tāne.</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="unit-divider">
+
+<!-- UNIT 5 -->
+<section class="unit fade-in" id="unit5">
+  <div class="unit-header">
+    <div class="unit-number">05</div>
+    <div class="unit-info">
+      <div class="unit-label">Unit five</div>
+      <div class="unit-title">Possession — the a/o distinction</div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Two classes of possession</h3>
+    <p class="concept">This is the feature that most surprises European learners. Māori divides all possessed nouns into two categories: <strong>a-class</strong> (active possession — things you control or acquire) and <strong>o-class</strong> (inalienable possession — things you belong to or are part of). The possessive particle changes accordingly.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Class</th><th>Particle</th><th>Covers</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td class="m">A-class</td><td><em>ā / a / tā / āku</em></td><td>Things you make, control, acquire, or subordinates</td><td>food, tools, spouse, children, songs, actions</td></tr>
+          <tr><td class="m">O-class</td><td><em>ō / o / tō / ōku</em></td><td>Things you belong to or are part of, inalienable</td><td>parents, home, tribe, emotions, land, clothing worn</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight">A useful mnemonic: O-class — the relationship is "I belong to it or it contains me." A-class — "it belongs to me, I dominate it." When in doubt: if you could acquire, control, or create it → a-class. If it pre-exists your relationship to it, or you cannot easily replace it → o-class.</div>
+
+    <div class="section-label">Possessive pronouns — full table</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Person</th><th>O-singular</th><th>O-plural</th><th>A-singular</th><th>A-plural</th></tr></thead>
+        <tbody>
+          <tr><td>1st sg (my)</td><td class="m">tōku</td><td class="m">ōku</td><td class="m">tāku</td><td class="m">āku</td></tr>
+          <tr><td>2nd sg (your)</td><td class="m">tōu</td><td class="m">ōu</td><td class="m">tāu</td><td class="m">āu</td></tr>
+          <tr><td>3rd sg (his/her)</td><td class="m">tōna</td><td class="m">ōna</td><td class="m">tāna</td><td class="m">āna</td></tr>
+          <tr><td>1st pl excl (our)</td><td class="m">tō mātou</td><td class="m">ō mātou</td><td class="m">tā mātou</td><td class="m">ā mātou</td></tr>
+          <tr><td>1st pl incl (our+you)</td><td class="m">tō tātou</td><td class="m">ō tātou</td><td class="m">tā tātou</td><td class="m">ā tātou</td></tr>
+          <tr><td>2nd pl (your, pl)</td><td class="m">tō koutou</td><td class="m">ō koutou</td><td class="m">tā koutou</td><td class="m">ā koutou</td></tr>
+          <tr><td>3rd pl (their)</td><td class="m">tō rātou</td><td class="m">ō rātou</td><td class="m">tā rātou</td><td class="m">ā rātou</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="concept">Note the inclusive/exclusive "we" distinction: <em>tātou</em> includes the person you are speaking to; <em>mātou</em> excludes them. This distinction is grammatically obligatory in Māori.</p>
+  </div>
+</section>
+
+<hr class="unit-divider">
+
+<!-- UNIT 6 -->
+<section class="unit fade-in" id="unit6">
+  <div class="unit-header">
+    <div class="unit-number">06</div>
+    <div class="unit-info">
+      <div class="unit-label">Unit six</div>
+      <div class="unit-title">Pronouns</div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Three numbers: singular, dual, and plural</h3>
+    <p class="concept">English has singular and plural. Māori has singular (one), dual (exactly two), and plural (three or more). This three-way number distinction is found in Ancient Greek and Sanskrit. You must specify whether "we" means two people or more than two.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Person</th><th>Singular</th><th>Dual (exactly 2)</th><th>Plural (3+)</th></tr></thead>
+        <tbody>
+          <tr><td>1st excl (I/we, not you)</td><td class="m">au / ahau</td><td class="m">māua</td><td class="m">mātou</td></tr>
+          <tr><td>1st incl (we, including you)</td><td class="note">—</td><td class="m">tāua</td><td class="m">tātou</td></tr>
+          <tr><td>2nd (you)</td><td class="m">koe</td><td class="m">kōrua</td><td class="m">koutou</td></tr>
+          <tr><td>3rd (he/she/they)</td><td class="m">ia</td><td class="m">rāua</td><td class="m">rātou</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="highlight">There is no gender distinction in Māori pronouns. <em>Ia</em> means he, she, or it. Context tells you which. This is similar to Finnish, Turkish, and Mandarin.</div>
+  </div>
+</section>
+
+<hr class="unit-divider">
+
+<!-- UNIT 7 -->
+<section class="unit fade-in" id="unit7">
+  <div class="unit-header">
+    <div class="unit-number">07</div>
+    <div class="unit-info">
+      <div class="unit-label">Unit seven</div>
+      <div class="unit-title">Prepositions &amp; case</div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">How Māori shows grammatical case</h3>
+    <p class="concept">Latin shows case by changing noun endings (<em>lupus / lupi / lupo / lupum</em>). Māori nouns never change, but small particles placed before noun phrases carry the same grammatical information — functioning exactly like case prepositions. Understanding them as "case markers" is the key insight.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Particle</th><th>Case equivalent</th><th>Function</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="m">te / ngā</td><td>Nominative (subject)</td><td>Marks the subject after the verb</td><td><em>Ka kai te kurī</em> — the dog ate</td></tr>
+          <tr><td class="m">i</td><td>Accusative (object)</td><td>Marks the direct object</td><td><em>Ka kai te kurī i te ika</em></td></tr>
+          <tr><td class="m">ki</td><td>Dative / directional</td><td>To, towards, destination</td><td><em>Ka haere ia ki Tāmaki</em></td></tr>
+          <tr><td class="m">i (before place)</td><td>Locative past</td><td>At/in/from (past time)</td><td><em>I noho ia i Pōneke</em></td></tr>
+          <tr><td class="m">kei</td><td>Locative present</td><td>At/in (present state)</td><td><em>Kei te kura ia</em> — she is at school</td></tr>
+          <tr><td class="m">hei</td><td>Locative future</td><td>At/in (future)</td><td><em>Hei reira tāua</em> — we'll be there</td></tr>
+          <tr><td class="m">nō / nā</td><td>Ablative / origin</td><td>From, belonging to</td><td><em>Nō Tāranaki ia</em></td></tr>
+          <tr><td class="m">mō / mā</td><td>Benefactive</td><td>For (with a/o class nuance)</td><td><em>He mā mā tēnā</em> — that is for mother</td></tr>
+          <tr><td class="m">e</td><td>Agentive</td><td>By (passive agent)</td><td><em>I kainga e ia</em> — eaten by him</td></tr>
+          <tr><td class="m">ko</td><td>Equative</td><td>Identifies / equals</td><td><em>Ko Tāne tōku hoa</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="highlight"><em>I</em> does double duty: immediately before a verb = past tense marker; immediately before a noun phrase = accusative/object marker. Context makes the distinction clear.</div>
+  </div>
+</section>
+
+<hr class="unit-divider">
+
+<!-- UNIT 8 -->
+<section class="unit fade-in" id="unit8">
+  <div class="unit-header">
+    <div class="unit-number">08</div>
+    <div class="unit-info">
+      <div class="unit-label">Unit eight</div>
+      <div class="unit-title">Adjectives</div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Adjectives follow the noun</h3>
+    <p class="concept">Like French or Spanish, Māori adjectives follow the noun they modify. They do not change form to agree in gender or case — they are invariant, like English adjectives.</p>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">the <em>big</em> house (adj before noun)</div></div>
+      <div class="ex-col"><div class="ex-lang">Māori</div><div class="ex-text maori">te whare <em>nui</em></div></div>
+      <div class="ex-col"><div class="ex-lang">Gloss</div><div class="ex-text">the house big</div></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Degree</th><th>Structure</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Positive</td><td><em>he [adj] [noun]</em></td><td><em>He nui tēnei</em> — this is big</td></tr>
+          <tr><td>Comparative</td><td><em>he [adj] ake … ki</em></td><td><em>He nui ake tēnei ki tērā</em> — this is bigger than that</td></tr>
+          <tr><td>Superlative</td><td><em>te [adj] rawa atu</em></td><td><em>Ko tēnei te nui rawa atu</em> — this is the biggest</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Stative verbs — adjectives that behave as verbs</h3>
+    <p class="concept">In Māori, many descriptive words can function as verbs directly, without needing "to be." This is similar to Japanese, Mandarin, or Ancient Greek stative verbs. The word <em>pai</em> (good) can mean "it is good" when given a tense particle.</p>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Present</div><div class="ex-text maori">Ka pai tērā!</div></div>
+      <div class="ex-col"><div class="ex-lang">Past</div><div class="ex-text maori">I māuiui ia.</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">That is good! / He was sick.</div></div>
+    </div>
+    <div class="highlight">Tense marking applies to descriptions of states just as to actions. The structure is identical to action verbs — the same particles, the same word order.</div>
+  </div>
+</section>
+
+<hr class="unit-divider">
+
+<!-- UNIT 9 -->
+<section class="unit fade-in" id="unit9">
+  <div class="unit-header">
+    <div class="unit-number">09</div>
+    <div class="unit-info">
+      <div class="unit-label">Unit nine</div>
+      <div class="unit-title">The passive voice</div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">The passive — far more important than in English</h3>
+    <p class="concept">In English, the passive is often avoided. In Māori, the passive is the default way to form transitive sentences with a definite, specific object. Understanding the passive is essential for natural Māori — not an optional advanced topic.</p>
+
+    <div class="section-label">Passive suffixes by verb class</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Suffix</th><th>Active verb</th><th>Passive form</th><th>English</th></tr></thead>
+        <tbody>
+          <tr><td class="m">-tia</td><td><em>kite</em> (see)</td><td class="m">kitea</td><td>be seen</td></tr>
+          <tr><td class="m">-a</td><td><em>kai</em> (eat)</td><td class="m">kainga</td><td>be eaten</td></tr>
+          <tr><td class="m">-hia</td><td><em>mahi</em> (work/do)</td><td class="m">mahia</td><td>be done</td></tr>
+          <tr><td class="m">-ngia</td><td><em>kī</em> (say)</td><td class="m">kīngia</td><td>be said</td></tr>
+          <tr><td class="m">-ria</td><td><em>tango</em> (take)</td><td class="m">tangoria</td><td>be taken</td></tr>
+          <tr><td class="m">-ina</td><td><em>hopu</em> (catch)</td><td class="m">hopukina</td><td>be caught</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-label">Active vs passive</div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Active (Māori)</div><div class="ex-text maori">Ka kai te kurī i te ika.</div></div>
+      <div class="ex-col"><div class="ex-lang">Gloss</div><div class="ex-text">SEQ eat the dog [obj] the fish</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">The dog ate the fish.</div></div>
+    </div>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Passive (Māori)</div><div class="ex-text maori">Ka kainga te ika e te kurī.</div></div>
+      <div class="ex-col"><div class="ex-lang">Gloss</div><div class="ex-text">SEQ eat-PASS the fish by the dog</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">The fish was eaten by the dog.</div></div>
+    </div>
+    <div class="highlight">When to use the passive: if the object is specific and definite, Māori speakers strongly prefer the passive. "He ate food" → active is fine. "He ate <em>the</em> food" → passive preferred. The agent (doer) is marked by <em>e</em> in the passive — note that <em>e</em> before a verb = future particle; <em>e</em> before a noun = agentive "by."</div>
+  </div>
+</section>
+
+<hr class="unit-divider">
+
+<!-- UNIT 10 -->
+<section class="unit fade-in" id="unit10">
+  <div class="unit-header">
+    <div class="unit-number">10</div>
+    <div class="unit-info">
+      <div class="unit-label">Unit ten</div>
+      <div class="unit-title">Relative clauses &amp; subordination</div>
+    </div>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Relative clauses — "the man who went"</h3>
+    <p class="concept">In English, relative clauses use "who, which, that." Māori uses a particle <em>ai</em> which functions as a relative pronoun placeholder — it marks the gap left by the relativised noun, similar to how some languages use a resumptive pronoun.</p>
+    <div class="example-strip">
+      <div class="ex-col"><div class="ex-lang">Main clause</div><div class="ex-text">Ka haere ia ki Pōneke.</div></div>
+      <div class="ex-col"><div class="ex-lang">Relative (Māori)</div><div class="ex-text maori">te wāhi i haere ai ia</div></div>
+      <div class="ex-col"><div class="ex-lang">English</div><div class="ex-text">the place where she went</div></div>
+    </div>
+    <p class="concept"><em>Ai</em> appears at the position where the relativised element would have been in the main clause. Think of it as a relative pronoun that stays in place to mark the gap, much like <em>que/qui</em> in French relative clauses.</p>
+  </div>
+
+  <div class="lesson">
+    <h3 class="lesson-title">Subordinating particles</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Particle</th><th>Function</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="m">kia</td><td>Purpose / in order to</td><td><em>Ka haere ia kia kite i tōna māmā</em> — she went in order to see her mother</td></tr>
+          <tr><td class="m">ā</td><td>Until / and then (temporal)</td><td><em>Noho ana ia ā ka ao</em> — she waited until dawn</td></tr>
+          <tr><td class="m">ahakoa</td><td>Although / concessive</td><td><em>Ahakoa kē tērā, ka pai</em> — although that's different, it's good</td></tr>
+          <tr><td class="m">ki te</td><td>If (conditional)</td><td><em>Ki te haere koe, ka kite</em> — if you go, you'll see</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>Te Reo Māori — A Grammar Course</strong></p>
+  <p>Structured around European grammatical principles for learners who already know how languages work.</p>
+  <p style="margin-top:1rem; font-size:0.8rem; opacity:0.6;">He aha te mea nui o te ao? He tangata, he tangata, he tangata.<br>What is the greatest thing in the world? It is people, it is people, it is people.</p>
+</footer>
+
+<script>
+const sections = document.querySelectorAll('.unit');
+const navLinks = document.querySelectorAll('nav a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, { threshold: 0.08, rootMargin: '-60px 0px -40% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+const fadeItems = document.querySelectorAll('.fade-in');
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.05 });
+fadeItems.forEach(i => fadeObserver.observe(i));
+</script>
+</body>
+</html>
